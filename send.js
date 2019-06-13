@@ -16,7 +16,6 @@ const nexmo = new Nexmo({
 
 const from = FROM_NUMBER;
 const to = TO_NUMBER;
-const text = "Помойте мне жопу";
 
 
 nexmo.message.sendSms(from, to, text, (err, responseData) => {
