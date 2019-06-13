@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import FakeComp from './components/fakeComp'
 
 
 class Index extends Component {
     render() {
         return (
             <div>
-                APODJPOADFD
+                <FakeComp/>
             </div>
         )
     }
