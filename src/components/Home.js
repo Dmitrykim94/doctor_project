@@ -1,0 +1,48 @@
+import React, { Component } from 'react';
+import Modal from 'react-modal';
+import { YMaps, Map } from 'react-yandex-maps'
+
+export default class Home extends Component {
+
+    state = {
+        case: null,
+        address: null,
+        showModal: false
+    }
+
+    openModal = () => {
+        this.setState({ showModal: true })
+    }
+
+    closeModal = () => {
+        this.setState({ showModal: false })
+    }
+
+
+
+    render() {
+        return (
+            <div>
+                <button onClick={this.openModal}>МНЕ ПЛОХО!</button>
+                <Modal isOpen={this.state.showModal} >
+                    <form>
+                        <label>Опишите вашу проблему</label><p />
+                        <input></input><p />
+                        <label>Адрес указан верно?</label><p />
+                        <input value="Москва, ул. Бурденко, 14А"></input><p />
+                        <label>Укажите номер телефона</label><p />
+                        <input type='tel'></input><p />
+                        <label>Как попасть к вам в квартру?</label><p />
+                        <input placeholder='Код домофона, этаж, подъезд'></input><p />
+                        <button onClick={this.closeModal}>Submit</button><p />
+                    </form>
+                </Modal>
+                <YMaps>
+                    <div>
+                        <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} />
+                    </div>
+                </YMaps>
+            </div>
+        )
+    }
+}
