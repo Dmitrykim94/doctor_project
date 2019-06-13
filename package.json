@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^6.1.1",
     "dotenv": "^8.0.0",
     "nexmo": "^2.4.1",
     "react": "^16.8.6",
