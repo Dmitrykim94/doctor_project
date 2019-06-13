@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { YMaps, Map } from 'react-yandex-maps'
+import Map from './Map'
 
 export default class Home extends Component {
 
@@ -37,12 +37,9 @@ export default class Home extends Component {
                         <button onClick={this.closeModal}>Submit</button><p />
                     </form>
                 </Modal>
-                <YMaps>
-                    <div>
-                        <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} />
-                    </div>
-                </YMaps>
+                <Map />
             </div>
         )
     }
 }
+ 
