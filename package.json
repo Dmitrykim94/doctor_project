@@ -3,12 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
     "firebase": "^6.1.1",
-=======
     "dotenv": "^8.0.0",
     "nexmo": "^2.4.1",
->>>>>>> bf02bc818b6955e47d0c339abc6b23da0fe8d451
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
