@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+
+export default class Home extends Component {
+
+    state = {
+        case: null,
+        address: null
+    }
+
+    getCase 
 
 
-class Index extends Component {
     render() {
         return (
             <div>
@@ -11,6 +18,3 @@ class Index extends Component {
         )
     }
 }
-
-ReactDOM.render(<Index/>, 
-    document.getElementById('root'))
