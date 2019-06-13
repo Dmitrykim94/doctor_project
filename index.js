@@ -1,1 +1,0 @@
-const dima = 'dima'
