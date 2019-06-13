@@ -1,0 +1,1 @@
+export const CREATE_CASES = 'CREATE_CASES'
