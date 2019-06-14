@@ -10,7 +10,7 @@ class Index extends Component {
         return (
             <div>
                 <FakeComp/>
-                {/* <Home /> */}
+                <Home />
                 <LengthPrinter/>
             </div>
         )
