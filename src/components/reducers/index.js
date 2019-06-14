@@ -18,8 +18,24 @@ const casesReducer = (state = initialCasesState, action) => {
     }
 }
 
+const initialUserState = {
+    currentUser:null,
+}
+
+const userReducer = (state=initialUserState, action) => {
+    switch (action.type) {
+        case actionTypes.SET_USER:
+        return {
+            currentUser:action.payload.currentUser
+        }
+        default:
+            return state
+    }
+}
+
 const combinedReducer = combineReducers({
-    cases: casesReducer
+    cases: casesReducer,
+    user: userReducer
 })
 
 export default combinedReducer
