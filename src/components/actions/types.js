@@ -1,3 +1,5 @@
 export const CREATE_CASES = 'CREATE_CASES'
 export const SET_USER = 'SER_USER'
 export const CLEAR_USER = 'CLEAR_USER'
+export const TRUE_USER = 'TRUE_USER'
+export const ALL_DOCTORS = 'ALL_DOCTORS'
