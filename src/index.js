@@ -24,7 +24,7 @@ class Index extends Component {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.props.setUser(user)
-            } else {
+            }else{
                 this.props.clearUser()
             }
         })
