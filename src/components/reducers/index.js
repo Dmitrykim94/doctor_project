@@ -4,7 +4,6 @@ import {combineReducers} from 'redux'
 
 const initialCasesState = {
     cases:[], 
-    // loading to add
 }
 
 const casesReducer = (state = initialCasesState, action) => {

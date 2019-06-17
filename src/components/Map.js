@@ -17,7 +17,7 @@ class Start extends React.Component {
 
     async componentDidMount() {
         console.log(this.props);
-        
+
         this._isMounted = true;
         this.props.ymaps.route(this.props.route).then(route => {
             if (this._isMounted === true) {
@@ -26,16 +26,11 @@ class Start extends React.Component {
                 });
             }
         });
-        this.props.ymaps.route([
-            'Королев',
-            { type: 'viaPoint', point: 'Мытищи' },
-            'Химки',
-            { type: 'wayPoint', point: [55.811511, 37.312518] }
-        ], {
-            mapStateAutoApply: true
-        }).then(function (route) {
-            this.props.ymaps.map.geoObjects.add(route);
-        });
+
+
+
+
+//         ////
         let a = []
         let promises = [];
         await this.state.routes.forEach((el, key) => {
@@ -50,16 +45,14 @@ class Start extends React.Component {
             )
         })
         await Promise.all(promises)
-        a.sort((a,b) => a-b)
-        console.log(a);
-        console.log(this.state.routes);
+        a.sort((a, b) => a - b)
         let closestAddress = ''
         this.state.routes.forEach((item) => {
             if (item.distance === a[0])
                 closestAddress = item.address
         })
-        
-        this.setState({closest:closestAddress})
+
+        this.setState({ closest: closestAddress })
 
         let doctorsAddresses = this.state.addresses
         let allDoctorCoordinates = []
@@ -80,7 +73,7 @@ class Start extends React.Component {
     render() {
 
 
-       
+
         return (
             <YMaps
                 query={{
@@ -106,7 +99,7 @@ class Start extends React.Component {
     }
 }
 
-//export default withYMaps(Start, true, ['route']);
+// export default withYMaps(Start, true, ['route']);
 const WrapperStart = withYMaps(Start, true, ['route']);
 export default () => <YMaps
     query={{
@@ -115,3 +108,61 @@ export default () => <YMaps
 >
     <WrapperStart />
 </YMaps>
+
+
+//////////////////////
+// style={{width: , height:}}
+// import React from "react";
+// import ReactDOM from "react-dom";
+// import { YMaps, Map } from "react-yandex-maps";
+// import "./styles.css";
+
+// const mapState = { center: [55.76, 37.64], zoom: 10 };
+
+// export default class App extends React.Component {
+//     map = null;
+
+//     handleApiAvaliable = ymaps => {
+//         ymaps
+//             .route(
+//                 [
+//                     "Королев",
+//                     { type: "viaPoint", point: "Мытищи" },
+//                     "Химки",
+//                     { type: "wayPoint", point: [55.811511, 37.312518] }
+//                 ],
+//                 {
+//                     mapStateAutoApply: true
+//                 }
+//             )
+//             .then(route => {
+//                 route.getPaths().options.set({
+//                     // в балуне выводим только информацию о времени движения с учетом пробок
+//                     balloonContentBodyLayout: ymaps.templateLayoutFactory.createClass(
+//                         "$[properties.humanJamsTime]"
+//                     ),
+//                     // можно выставить настройки графики маршруту
+//                     strokeColor: "0000ffff",
+//                     opacity: 0.9
+//                 });
+
+//                 // добавляем маршрут на карту
+//                 this.map.geoObjects.add(route);
+//             });
+//     };
+
+//     render() {
+//         return (
+//             <div className="App">
+//                 <h1>Hello CodeSandbox</h1>
+//                 <YMaps onApiAvaliable={ymaps => this.handleApiAvaliable(ymaps)}
+//                     query={{
+//                         apikey: '5fbca2da-4afa-416a-97f8-463929f62c71',
+//                     }}>
+//                     <Map state={mapState} instanceRef={ref => (this.map = ref)} />
+//                 </YMaps>
+//             </div>
+//         );
+//     }
+// }
+

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import LengthPrinter from './components/Map'
-
 import FakeComp from './components/fakeComp'
 import Home from '../src/components/Home';
 import { createStore } from 'redux'

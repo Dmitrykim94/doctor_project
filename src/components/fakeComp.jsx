@@ -1,6 +1,6 @@
 import React from 'react'
 import firebase from '../firebase'
-import {cases, doctors} from '../fakeData'
+import {cases} from '../fakeData'
 
 class FakeComp extends React.Component {
     state = {

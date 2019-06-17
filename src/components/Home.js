@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { YMaps, Map, RouteButton } from 'react-yandex-maps';
 import { Menu, Input, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -66,12 +65,6 @@ export default class Home extends Component {
 
     render() {
         const { activeItem } = this.state.activeItem;
-        const mapState = {
-            center: [55.751574, 37.573856],
-            zoom: 3,
-        };
-
-
 
         const fullMenu = (<Menu secondary>
             <Link to='/home'>
@@ -176,16 +169,6 @@ export default class Home extends Component {
                         <button onClick={this.closeModalLog}>Submit</button>
                     </form>
                 </Modal>
-
-                <YMaps>
-                    <div>
-                        <Map onClick={this.handleClick} defaultState={{ center: [55.75, 37.57], zoom: 9 }} >
-
-                            <RouteButton options={{ float: 'right' }} />
-
-                        </Map>
-                    </div>
-                </YMaps>
             </div>
         )
     }
