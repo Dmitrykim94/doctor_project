@@ -22,7 +22,6 @@ class Index extends Component {
             if (user) {
                 this.props.setUser(user)
             }else{
-                this.props.history.push('/login')
                 this.props.clearUser()
             }
         })
