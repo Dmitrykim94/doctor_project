@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { YMaps, Map, Placemark, GeoObject, RouteButton } from 'react-yandex-maps';
+import { YMaps, Map, RouteButton } from 'react-yandex-maps';
 import { Menu, Input, Icon } from 'semantic-ui-react';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 export default class Home extends Component {
@@ -15,6 +15,9 @@ export default class Home extends Component {
         showModalLog: false,
         showModalReg: false,
         activeItem: 'home',
+        text: null,
+        phone: null,
+        howTo: null
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -22,9 +25,14 @@ export default class Home extends Component {
     openModalHelp = () => {
         this.setState({ showModalHelp: true })
     }
-    closeModalHelp = () => {
+    closeModalHelp = async () => {
         this.setState({ showModalHelp: false })
+
+        await fetch(`http://localhost:3000/send-sms?text=${this.state.text}`)
+
     }
+
+
     openModalReg = () => {
         this.setState({ showModalReg: true })
     }
@@ -38,7 +46,22 @@ export default class Home extends Component {
         this.setState({ showModalLog: false })
     }
 
-    handleClick = (event) => console.log('Clicked', event);
+
+
+    sendText = async (e) => {
+        e.preventDefault()
+        await fetch('/send-sms', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: this.state.text,
+
+            })
+        })
+    }
+
 
 
     render() {
@@ -47,6 +70,8 @@ export default class Home extends Component {
             center: [55.751574, 37.573856],
             zoom: 3,
         };
+
+
 
         const fullMenu = (<Menu secondary>
             <Link to='/home'>
@@ -94,22 +119,24 @@ export default class Home extends Component {
                 </Icon.Group>
                 <Modal isOpen={this.state.showModalHelp} >
                     <form>
+
                         <label>Опишите вашу проблему</label><p />
-                        <Input fluid />
+                        <Input fluid onChange={e => this.setState({ text: e.target.value })} />
 
                         <p />
                         <label>Адрес указан верно?</label><p />
-                        <Input fluid value="Москва, ул. Бурденко, 14А" />
+                        <Input onChange={e => this.setState({ address: e.target.value })} fluid value="Москва, ул. Бурденко, 14А" />
 
                         <p />
                         <label>Укажите номер телефона</label><p />
-                        <Input >
+                        <Input onChange={e => this.setState({ phone: e.target.value })}>
                             <input />
                         </Input><p />
                         <label>Как попасть к вам в квартру?</label><p />
-                        <Input icon='exclamation circle' placeholder='Код домофона, этаж, подъезд'>
+                        <Input onChange={e => this.setState({ howTo: e.target.value })} icon='exclamation circle' placeholder='Код домофона, этаж, подъезд'>
                             <input />
                         </Input>
+
                         <p />
                         <button onClick={this.closeModalHelp}>Submit</button><p />
                     </form>
@@ -155,8 +182,6 @@ export default class Home extends Component {
                         <Map onClick={this.handleClick} defaultState={{ center: [55.75, 37.57], zoom: 9 }} >
 
                             <RouteButton options={{ float: 'right' }} />
-
-
 
                         </Map>
                     </div>
