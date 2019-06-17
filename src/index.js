@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import LengthPrinter from './components/Map'
+
 import FakeComp from './components/fakeComp'
 import Home from '../src/components/Home';
 import { createStore } from 'redux'
@@ -11,21 +13,22 @@ import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import firebase from './firebase'
-import {setUser, clearUser} from './components/actions/index'
+import { setUser, clearUser } from './components/actions/index'
+
 
 const store = createStore(combinedReducer, composeWithDevTools())
 
 class Index extends Component {
 
-    componentDidMount(){
-        firebase.auth().onAuthStateChanged(user=> {
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.props.setUser(user)
             }else{
                 this.props.clearUser()
             }
         })
-    }   
+    }
 
     render() {
         return (
@@ -36,6 +39,7 @@ class Index extends Component {
                     <Route path='/comp' component={FakeComp} />
                     <Route path='/register' component={Register} />
                     <Route path='/login' component={Login} />
+                    <Route path='/map' component={LengthPrinter} />
                 </Switch>
             </div>
         )
