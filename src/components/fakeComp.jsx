@@ -5,8 +5,6 @@ import {cases, doctors} from '../fakeData'
 class FakeComp extends React.Component {
     state = {
         casesRef: firebase.database().ref('cases'),
-
-
     }
 
     handleChange = (e) => {
@@ -31,7 +29,6 @@ class FakeComp extends React.Component {
         .child(key)
         .update(newCase)
         .then(console.log('case added'))
-
     }
 
     handleSubmit = (e) => {
