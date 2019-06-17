@@ -13,14 +13,31 @@ import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import firebase from './firebase'
-import { setUser, clearUser } from './components/actions/index'
+import { setUser, clearUser, createCases } from './components/actions/index'
 
 
 const store = createStore(combinedReducer, composeWithDevTools())
 
 class Index extends Component {
 
+    state ={
+        cases: firebase.database().ref('cases'),
+    }
+
     componentDidMount() {
+        let cases = []
+        firebase.database().ref('cases').on('child_added', snap => {
+            let obj = {}
+            let val = snap.val()
+            obj.desc = snap.val().desc
+            obj.howto = snap.val().howto
+            obj.id = snap.val().id
+            obj.address = snap.val().address
+            obj.tel = snap.val().tel
+            cases.push(obj)
+            this.props.createCases([obj])
+        })
+
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.props.setUser(user)
@@ -52,7 +69,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     setUser: (user) => dispatch(setUser(user)),
-    clearUser: () => dispatch(clearUser())
+    clearUser: () => dispatch(clearUser()),
+    createCases: (cases) => dispatch(createCases(cases))
 })
 
 const IndexWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(Index))

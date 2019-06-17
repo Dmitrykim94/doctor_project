@@ -1,7 +1,10 @@
+require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const Twilio = require('twilio');
+
+
 
 
 const ACC_SID = process.env.ACC_SID;
