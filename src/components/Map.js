@@ -1,5 +1,6 @@
 import React from 'react'
 import { YMaps, Map, Placemark, withYMaps, ZoomControl } from 'react-yandex-maps'
+import { connect } from 'react-redux'
 
 class Start extends React.Component {
     map = null;
@@ -91,35 +92,48 @@ class Start extends React.Component {
                 }}
             >
                 <p>the closest address is {this.state.closest}</p>
-                <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }}
-                    modules={['multiRouter.MultiRoute']}
-                    onLoad={ymaps => this.handleApiAvaliable(ymaps)}
-                    instanceRef={ref => (this.map = ref)}
-                >
-                    <ZoomControl />
-                    {this.state.coordinates.map((item) => {
-                        return (
-                            <Placemark key={item}
-                                modules={['geoObject.addon.balloon']}
-                                geometry={[item[0], item[1]]}
-                                properties={{
-                                    balloonContent:
-                                        `${item}`
-                                }}
-                            />
-                        )
-                    })}
-                </Map>
+                <div > 
+                    <Map style={{width:'900px'}} 
+                        defaultState={{ center: [55.75, 37.57], zoom: 9 }}
+                        modules={['multiRouter.MultiRoute']}
+                        onLoad={ymaps => this.handleApiAvaliable(ymaps)}
+                        instanceRef={ref => (this.map = ref)}
+                    >
+                        <ZoomControl />
+                        {this.state.coordinates.map((item) => {
+                            return (
+                                <Placemark key={item}
+                                    modules={['geoObject.addon.balloon']}
+                                    geometry={[item[0], item[1]]}
+                                    properties={{
+                                        balloonContent:
+                                            `${item}`
+                                    }}
+                                />
+                            )
+                        })}
+                    </Map>
+                </div>
             </YMaps>)
     }
 }
 
 //export default withYMaps(Start, true, ['route']);
 const WrapperStart = withYMaps(Start, true, ['route']);
-export default () => <YMaps
+export const LengthPrinter = () => <YMaps
     query={{
         apikey: '5fbca2da-4afa-416a-97f8-463929f62c71',
     }}
 >
     <WrapperStart />
 </YMaps>
+
+const mapStateToProps = state => ({
+    cases: state.cases.cases,
+    doctors: state.cases.doctors
+});
+
+export default connect(
+    mapStateToProps,
+    null
+)(Start);

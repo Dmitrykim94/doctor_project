@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Menu, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
-
 export default class Home extends Component {
 
     state = {
@@ -14,9 +13,6 @@ export default class Home extends Component {
 
     render() {
         const { activeItem } = this.state.activeItem;
-     
-
-
         const fullMenu = (<Menu secondary>
             <Link to='/'>
                 <Menu.Item
