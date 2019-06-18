@@ -14,6 +14,7 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import firebase from './firebase'
 import { setUser, clearUser, trueUser, allDoctors,createCases } from './components/actions/index'
+import SingleCase from './components/SingleCase';
 
 
 
@@ -69,10 +70,11 @@ class Index extends Component {
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route path='/cases' component={FakeCases} />
-                    <Route path='/comp' component={FakeComp} />
+                    <Route exact path='/comp' component={FakeComp} />
                     <Route path='/register' component={Register} />
                     <Route path='/login' component={Login} />
                     <Route path='/map' component={LengthPrinter} />
+                    <Route exact path= '/:id' component = {SingleCase}/>
                 </Switch>
             </div>
         )
@@ -87,8 +89,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setUser: (user) => dispatch(setUser(user)),
     clearUser: () => dispatch(clearUser()),
-
-    createCases: (cases) => dispatch(createCases(cases))
+    createCases: (cases) => dispatch(createCases(cases)),
     trueUser: (user2)=> dispatch(trueUser(user2)),
     allDoctors: (doctors) => dispatch(allDoctors(doctors))
 })

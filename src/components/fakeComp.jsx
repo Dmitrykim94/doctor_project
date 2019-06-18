@@ -1,21 +1,25 @@
 import React from 'react'
 import firebase from '../firebase'
-import { cases, doctors } from '../fakeData'
 import { connect } from "react-redux";
+import { Link, withRouter } from 'react-router-dom'
+
 
 class FakeComp extends React.Component {
     state = {
         casesRef: firebase.database().ref('cases'),
+        case: ''
     }
 
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    addCase = () => {
+     addCase = () => {
         const { desc, tel, howto, casesRef, address } = this.state
 
         const key = casesRef.push().key
+
+        this.setState({case:key})
 
         const newCase = {
             id: key,
@@ -28,7 +32,7 @@ class FakeComp extends React.Component {
         casesRef
             .child(key)
             .update(newCase)
-            .then(console.log('case added'))
+            .then(() => this.props.history.push(newCase.id))
     }
 
     handleSubmit = (e) => {
@@ -39,10 +43,8 @@ class FakeComp extends React.Component {
 
 
     render() {
-        const lastCase = this.props.cases[this.props.cases.length - 1]
-        console.log(lastCase)
         return (
-            <div>{JSON.stringify(cases[0])}
+            <div>
                 <form action="post" onSubmit={this.handleSubmit}>
                     <input type="text" placeholder='desc' name='desc' onChange={this.handleChange} />
                     <br />
@@ -64,9 +66,9 @@ const mapStateToProps = state => ({
     cases: state.cases.cases
 });
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     null
-)(FakeComp);
+)(FakeComp));
 
 
