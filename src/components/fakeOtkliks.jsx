@@ -30,5 +30,5 @@ class FakeOtkliks extends React.Component {
 const mapStateToProps = (state) => ({
     cases: state.cases.cases
 })
-// export default connect(mapStateToProps) (FakeOtkliks)
+
 export default connect (mapStateToProps) (FakeOtkliks)

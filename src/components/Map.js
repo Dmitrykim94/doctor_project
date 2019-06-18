@@ -19,6 +19,8 @@ class Start extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this.props);
+        
         this._isMounted = true;
         this.props.ymaps.route(this.props.route).then(route => {
             if (this._isMounted === true) {
@@ -48,7 +50,7 @@ class Start extends React.Component {
                 closestAddress = item.address
         })
 
-        this.setState({ closest: closestAddress })
+        await this.setState({ closest: closestAddress })
 
         let doctorsAddresses = this.state.addresses
         let allDoctorCoordinates = []
@@ -93,7 +95,7 @@ class Start extends React.Component {
             >
                 <p>the closest address is {this.state.closest}</p>
                 <div > 
-                    <Map style={{width:'900px'}} 
+                    <Map 
                         defaultState={{ center: [55.75, 37.57], zoom: 9 }}
                         modules={['multiRouter.MultiRoute']}
                         onLoad={ymaps => this.handleApiAvaliable(ymaps)}
@@ -120,6 +122,7 @@ class Start extends React.Component {
 
 //export default withYMaps(Start, true, ['route']);
 const WrapperStart = withYMaps(Start, true, ['route']);
+
 export const LengthPrinter = () => <YMaps
     query={{
         apikey: '5fbca2da-4afa-416a-97f8-463929f62c71',

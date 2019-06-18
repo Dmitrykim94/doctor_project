@@ -12,36 +12,7 @@ class FakeCases extends React.Component {
         post: [],
     }
 
-
-    // componentDidMount() {
-    //     console.log(this.state.cases)
-    //     this.state.cases.on('child_added', snap => {
-    //         let oneCase = snap.val()
-    //         let newAdvState = []
-    //         for (let i in oneCase){
-    //             newAdvState.push({
-    //                 id:i,
-    //                 lat:oneCase[i].lat
-    //             })
-    //         }
-    //         this.setState({
-    //             post:newAdvState
-    //         })
-    //         console.log(newAdvState)
-    //         this.props.createCases(newAdvState)
-            
-    //     })
-    // }
-
-
-
-
-    handleOtklik = (id) => {
-        // console.log(id)
-    }
-
     render() {
-        const { post } = this.state
         return (
             <FakeOtkliks />
         )
