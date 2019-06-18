@@ -88,7 +88,7 @@ const mapDispatchToProps = dispatch => ({
     setUser: (user) => dispatch(setUser(user)),
     clearUser: () => dispatch(clearUser()),
 
-    createCases: (cases) => dispatch(createCases(cases))
+    createCases: (cases) => dispatch(createCases(cases)),
     trueUser: (user2)=> dispatch(trueUser(user2)),
     allDoctors: (doctors) => dispatch(allDoctors(doctors))
 })

@@ -21,16 +21,18 @@ app.use(bodyParser.json());
 
 
 
-app.get('/send-sms', function (req, res) {
+app.post('/send-sms', function (req, res) {
     res.header('Content-Type', 'application/json');
 
-    const { text } = req.query;
-    console.log(text)
-
     client.messages.create({
-        to: TO_NUMBER,
+        to: '+79253499087',
         from: FROM_NUMBER,
-        body: text
+        body: `
+        Описание: ${req.body.text.desc}
+        Адрес: ${req.body.text.address}
+        Телефон: ${req.body.text.tel}
+        Как попасть в квартиру: ${req.body.text.howto}
+        `
     })
         .then(() => {
             res.send(JSON.stringify({ success: true }));
@@ -41,4 +43,4 @@ app.get('/send-sms', function (req, res) {
         });
 });
 
-app.listen(3000, () => console.log('PORT 3000!'))
+app.listen(4000, () => console.log('PORT 4000!'))

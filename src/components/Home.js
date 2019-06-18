@@ -1,76 +1,20 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
-import { YMaps, Map, RouteButton } from 'react-yandex-maps';
-import { Menu, Input, Icon } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 
 export default class Home extends Component {
 
     state = {
-        cases: [],
-        address: null,
         doctorIsLogged: false,
-        showModalHelp: false,
-        showModalLog: false,
-        showModalReg: false,
         activeItem: 'home',
-        text: null,
-        phone: null,
-        howTo: null
     }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-    openModalHelp = () => {
-        this.setState({ showModalHelp: true })
-    }
-    closeModalHelp = async () => {
-        this.setState({ showModalHelp: false })
-
-        await fetch(`http://localhost:3000/send-sms?text=${this.state.text}`)
-
-    }
-
-
-    openModalReg = () => {
-        this.setState({ showModalReg: true })
-    }
-    closeModalReg = () => {
-        this.setState({ showModalReg: false })
-    }
-    openModalLog = () => {
-        this.setState({ showModalLog: true })
-    }
-    closeModalLog = () => {
-        this.setState({ showModalLog: false })
-    }
-
-
-
-    sendText = async (e) => {
-        e.preventDefault()
-        await fetch('/send-sms', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                text: this.state.text,
-
-            })
-        })
-    }
-
-
-
     render() {
         const { activeItem } = this.state.activeItem;
-        const mapState = {
-            center: [55.751574, 37.573856],
-            zoom: 3,
-        };
-
+     
 
 
         const fullMenu = (<Menu secondary>
@@ -86,16 +30,14 @@ export default class Home extends Component {
             name='Registration'
             active={activeItem === 'messages'}
             onClick={this.handleItemClick}
-            onClick={this.openModalReg}
         />           
             </Link>
 
             <Link to='/login'>
             <Menu.Item
                 name='Login'
-                active={activeItem === 'friends'}
+                active={activeItem === 'home'}
                 onClick={this.handleItemClick}
-                onClick={this.openModalLog}
             />
             </Link>
         </Menu>);
@@ -104,7 +46,7 @@ export default class Home extends Component {
                 active={activeItem === 'home'}
                 onClick={this.handleItemClick}
             />
-            
+
             <Menu.Menu position='right'>
                 <Menu.Item
                     name='logout'
