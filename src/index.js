@@ -12,20 +12,53 @@ import { BrowserRouter as Router, Switch, Route, withRouter } from 'react-router
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import firebase from './firebase'
-import { setUser, clearUser } from './components/actions/index'
+import { setUser, clearUser, trueUser, allDoctors,createCases } from './components/actions/index'
+
 
 
 const store = createStore(combinedReducer, composeWithDevTools())
 
 class Index extends Component {
 
+    state ={
+        cases: firebase.database().ref('cases'),
+    }
+
     componentDidMount() {
+        let cases = []
+        firebase.database().ref('cases').on('child_added', snap => {
+            let obj = {}
+            let val = snap.val()
+            obj.desc = snap.val().desc
+            obj.howto = snap.val().howto
+            obj.id = snap.val().id
+            obj.address = snap.val().address
+            obj.tel = snap.val().tel
+            cases.push(obj)
+            this.props.createCases([obj])
+        })
+
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.props.setUser(user)
+                this.getTrueUser(user.uid)
+                this.getAllDoctors()
             }else{
                 this.props.clearUser()
             }
+        })
+    }
+
+    getAllDoctors = () => {
+        firebase.database().ref('users').on('child_added', snap =>{
+            this.props.allDoctors(snap.val())
+        })
+    }
+
+
+    getTrueUser = (uid) => {
+        firebase.database().ref('users').child(uid).once('value', snap => {
+            this.props.trueUser(snap.val())
         })
     }
 
@@ -46,12 +79,16 @@ class Index extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user.currentUser
+    user: state.user.currentUser,
+    trueUser: state.trueUser
 })
 
 const mapDispatchToProps = dispatch => ({
     setUser: (user) => dispatch(setUser(user)),
-    clearUser: () => dispatch(clearUser())
+    clearUser: () => dispatch(clearUser()),
+    createCases: (cases) => dispatch(createCases(cases)),
+    trueUser: (user2)=> dispatch(trueUser(user2)),
+    allDoctors: (doctors) => dispatch(allDoctors(doctors))
 })
 
 const IndexWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(Index))

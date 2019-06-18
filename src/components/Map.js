@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
-import { YMaps, Map, Placemark, withYMaps } from 'react-yandex-maps'
+import React from 'react'
+import { YMaps, Map, Placemark, withYMaps, ZoomControl } from 'react-yandex-maps'
 
 class Start extends React.Component {
+    map = null;
+
     state = {
         routeLength: null,
         addresses: ['Тверская,6', 'Космонавтов 8к2', 'Октябрьский проспект, 411а'],
@@ -16,8 +18,6 @@ class Start extends React.Component {
     }
 
     async componentDidMount() {
-        console.log(this.props);
-
         this._isMounted = true;
         this.props.ymaps.route(this.props.route).then(route => {
             if (this._isMounted === true) {
@@ -26,11 +26,6 @@ class Start extends React.Component {
                 });
             }
         });
-
-
-
-
-//         ////
         let a = []
         let promises = [];
         await this.state.routes.forEach((el, key) => {
@@ -70,9 +65,24 @@ class Start extends React.Component {
         this._isMounted = false;
     }
 
+    handleApiAvaliable = ymaps => {
+        let multiRoute = new ymaps.multiRouter.MultiRoute({
+            // Точки маршрута.
+            // Обязательное поле. 
+            referencePoints: [
+                `${this.state.clientAddress[0]}`,
+                'Москва, метро Арбатская',
+                // [55.734876, 37.59308], // улица Льва Толстого.
+            ]
+        }, {
+                // Автоматически устанавливать границы карты так,
+                // чтобы маршрут был виден целиком.
+                boundsAutoApply: true
+            });
+        this.map.geoObjects.add(multiRoute);
+    };
+
     render() {
-
-
 
         return (
             <YMaps
@@ -81,15 +91,20 @@ class Start extends React.Component {
                 }}
             >
                 <p>the closest address is {this.state.closest}</p>
-                <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} >
+                <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }}
+                    modules={['multiRouter.MultiRoute']}
+                    onLoad={ymaps => this.handleApiAvaliable(ymaps)}
+                    instanceRef={ref => (this.map = ref)}
+                >
+                    <ZoomControl />
                     {this.state.coordinates.map((item) => {
                         return (
-                            <Placemark
+                            <Placemark key={item}
                                 modules={['geoObject.addon.balloon']}
                                 geometry={[item[0], item[1]]}
                                 properties={{
                                     balloonContent:
-                                        'placemark 1'
+                                        `${item}`
                                 }}
                             />
                         )
@@ -99,7 +114,7 @@ class Start extends React.Component {
     }
 }
 
-// export default withYMaps(Start, true, ['route']);
+//export default withYMaps(Start, true, ['route']);
 const WrapperStart = withYMaps(Start, true, ['route']);
 export default () => <YMaps
     query={{
@@ -108,61 +123,3 @@ export default () => <YMaps
 >
     <WrapperStart />
 </YMaps>
-
-
-//////////////////////
-// style={{width: , height:}}
-// import React from "react";
-// import ReactDOM from "react-dom";
-// import { YMaps, Map } from "react-yandex-maps";
-// import "./styles.css";
-
-// const mapState = { center: [55.76, 37.64], zoom: 10 };
-
-// export default class App extends React.Component {
-//     map = null;
-
-//     handleApiAvaliable = ymaps => {
-//         ymaps
-//             .route(
-//                 [
-//                     "Королев",
-//                     { type: "viaPoint", point: "Мытищи" },
-//                     "Химки",
-//                     { type: "wayPoint", point: [55.811511, 37.312518] }
-//                 ],
-//                 {
-//                     mapStateAutoApply: true
-//                 }
-//             )
-//             .then(route => {
-//                 route.getPaths().options.set({
-//                     // в балуне выводим только информацию о времени движения с учетом пробок
-//                     balloonContentBodyLayout: ymaps.templateLayoutFactory.createClass(
-//                         "$[properties.humanJamsTime]"
-//                     ),
-//                     // можно выставить настройки графики маршруту
-//                     strokeColor: "0000ffff",
-//                     opacity: 0.9
-//                 });
-
-//                 // добавляем маршрут на карту
-//                 this.map.geoObjects.add(route);
-//             });
-//     };
-
-//     render() {
-//         return (
-//             <div className="App">
-//                 <h1>Hello CodeSandbox</h1>
-//                 <YMaps onApiAvaliable={ymaps => this.handleApiAvaliable(ymaps)}
-//                     query={{
-//                         apikey: '5fbca2da-4afa-416a-97f8-463929f62c71',
-//                     }}>
-//                     <Map state={mapState} instanceRef={ref => (this.map = ref)} />
-//                 </YMaps>
-//             </div>
-//         );
-//     }
-// }
-

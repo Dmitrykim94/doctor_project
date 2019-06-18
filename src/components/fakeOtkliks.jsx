@@ -1,5 +1,6 @@
 import React from 'react'
 import firebase from '../firebase'
+import {connect} from 'react-redux'
 
 
 class FakeOtkliks extends React.Component {
@@ -14,7 +15,6 @@ class FakeOtkliks extends React.Component {
 
     render() {
         const {cases} = this.props
-        console.log(cases)
 
         return (<ul>
             {cases.length > 0 && cases.map(i => {
@@ -27,7 +27,8 @@ class FakeOtkliks extends React.Component {
     }
 }
 
-
-
+const mapStateToProps = (state) => ({
+    cases: state.cases.cases
+})
 // export default connect(mapStateToProps) (FakeOtkliks)
-export default FakeOtkliks
+export default connect (mapStateToProps) (FakeOtkliks)

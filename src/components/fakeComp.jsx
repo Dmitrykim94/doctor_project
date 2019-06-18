@@ -1,6 +1,7 @@
 import React from 'react'
 import firebase from '../firebase'
-import {cases} from '../fakeData'
+import { cases, doctors } from '../fakeData'
+import { connect } from "react-redux";
 
 class FakeComp extends React.Component {
     state = {
@@ -12,23 +13,22 @@ class FakeComp extends React.Component {
     }
 
     addCase = () => {
-        const { desc, lat, long, tel, howto, casesRef } = this.state
+        const { desc, tel, howto, casesRef, address } = this.state
 
         const key = casesRef.push().key
 
         const newCase = {
-            id:key,
-            desc:desc,
-            lat:lat,
-            long:long,
-            tel:tel,
-            howto:howto,
+            id: key,
+            desc: desc,
+            address: address,
+            tel: tel,
+            howto: howto,
         }
 
         casesRef
-        .child(key)
-        .update(newCase)
-        .then(console.log('case added'))
+            .child(key)
+            .update(newCase)
+            .then(console.log('case added'))
     }
 
     handleSubmit = (e) => {
@@ -36,21 +36,23 @@ class FakeComp extends React.Component {
         this.addCase()
     }
 
-    render(){
-        return(
+
+
+    render() {
+        const lastCase = this.props.cases[this.props.cases.length - 1]
+        console.log(lastCase)
+        return (
             <div>{JSON.stringify(cases[0])}
-            <form action="post" onSubmit= {this.handleSubmit}>
-                <input type="text" placeholder = 'desc' name ='desc' onChange = {this.handleChange}/>
-                <br/>
-                <input type="text" placeholder = 'lat' name = 'lat' onChange = {this.handleChange}/>
-                <br/>
-                <input type="text" placeholder = 'long' name = 'long' onChange = {this.handleChange}/>
-                <br/>
-                <input type="text" placeholder = 'tel' name = 'tel' onChange = {this.handleChange}/>
-                <br/>
-                <input type="text" placeholder = 'howto' name = 'howto' onChange = {this.handleChange}/>
-                <button>submit</button>
-            </form>
+                <form action="post" onSubmit={this.handleSubmit}>
+                    <input type="text" placeholder='desc' name='desc' onChange={this.handleChange} />
+                    <br />
+                    <input type="text" placeholder='address' name='address' onChange={this.handleChange} />
+                    <br />
+                    <input type="text" placeholder='tel' name='tel' onChange={this.handleChange} />
+                    <br />
+                    <input type="text" placeholder='howto' name='howto' onChange={this.handleChange} />
+                    <button>submit</button>
+                </form>
             </div>
         )
     }
@@ -58,4 +60,13 @@ class FakeComp extends React.Component {
 
 
 
-export default FakeComp
+const mapStateToProps = state => ({
+    cases: state.cases.cases
+});
+
+export default connect(
+    mapStateToProps,
+    null
+)(FakeComp);
+
+

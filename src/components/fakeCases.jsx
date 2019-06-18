@@ -33,23 +33,6 @@ class FakeCases extends React.Component {
     //     })
     // }
 
-    componentDidMount() {
-        let cases = []
-        this.state.cases.on('child_added', snap => {
-            let obj = {}
-            // let val = snap.val()
-            obj.desc = snap.val().desc
-            obj.howto = snap.val().howto
-            obj.id = snap.val().id
-            obj.lat = snap.val().lat
-            obj.long = snap.val().long
-            obj.tel = snap.val().tel
-            cases.push(obj)
-            this.setState({post: [...this.state.post, obj]})
-            this.props.createCases([obj])
-        })
-        // console.log(cases.length)
-     }
 
 
 
@@ -60,7 +43,7 @@ class FakeCases extends React.Component {
     render() {
         const { post } = this.state
         return (
-            <FakeOtkliks cases={post}/>
+            <FakeOtkliks />
         )
     }
 }
