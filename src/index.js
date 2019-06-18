@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import LengthPrinter from './components/Map'
-
 import FakeComp from './components/fakeComp'
 import Home from '../src/components/Home';
 import { createStore } from 'redux'
+import { Button } from 'semantic-ui-react'
 import { Provider, connect } from 'react-redux'
 import combinedReducer from './components/reducers/index'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -14,6 +14,7 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import firebase from './firebase'
 import { setUser, clearUser, trueUser, allDoctors,createCases } from './components/actions/index'
+import SingleCase from './components/SingleCase';
 
 
 
@@ -29,7 +30,6 @@ class Index extends Component {
         let cases = []
         firebase.database().ref('cases').on('child_added', snap => {
             let obj = {}
-            let val = snap.val()
             obj.desc = snap.val().desc
             obj.howto = snap.val().howto
             obj.id = snap.val().id
@@ -56,6 +56,9 @@ class Index extends Component {
         })
     }
 
+    handleSignOut =() => {
+        firebase.auth().signOut()
+    }
 
     getTrueUser = (uid) => {
         firebase.database().ref('users').child(uid).once('value', snap => {
@@ -66,13 +69,15 @@ class Index extends Component {
     render() {
         return (
             <div>
+                <Button onClick = {this.handleSignOut}>Разлогиниться</Button>
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route path='/cases' component={FakeCases} />
-                    <Route path='/comp' component={FakeComp} />
+                    <Route exact path='/comp' component={FakeComp} />
                     <Route path='/register' component={Register} />
                     <Route path='/login' component={Login} />
                     <Route path='/map' component={LengthPrinter} />
+                    <Route exact path= '/:id' component = {SingleCase}/>
                 </Switch>
             </div>
         )
@@ -87,7 +92,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setUser: (user) => dispatch(setUser(user)),
     clearUser: () => dispatch(clearUser()),
-
     createCases: (cases) => dispatch(createCases(cases)),
     trueUser: (user2)=> dispatch(trueUser(user2)),
     allDoctors: (doctors) => dispatch(allDoctors(doctors))
