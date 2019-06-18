@@ -1,38 +1,39 @@
 import React from 'react'
 import firebase from '../firebase'
 import { connect } from 'react-redux'
-import Map2 from './Map'
-import { YMaps, Map, Placemark, withYMaps, ZoomControl } from 'react-yandex-maps'
-import { conditionalExpression } from '@babel/types';
+import MapCase from './MapCase'
 
-
-class SingleCase extends React.Component {
+class SingleCase extends React.Component {    
+    
     state = {
         address: '',
         desc: '',
         howto: '',
         tel: '',
+        adr: ''
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let id = window.location.href.match('([^\/]+$)')[0]
-        console.log(id)
-        firebase.database().ref('cases').child(id).once('value', snap => {
-            this.setState({
-                address: snap.val().address,
+        firebase.database().ref('cases').child(id).once('value', async snap => {
+            
+            await this.setState({                
+                address: "snap.val().address",
                 desc: snap.val().desc,
                 howto: snap.val().howto,
-                tel: snap.val().tel
+                tel: snap.val().tel,
+                adr: 'Москва, Улица Пушкина 15'
             })
+            
         })
     }
 
     render() {
-        console.log('======================');
+        // console.log(this.props.history);
         
-        console.log(this.props);
-        const { user, trueUser } = this.props
-        
+        const { user, trueUser, cases } = this.props
+        // console.log(cases);
+
         let page;
         if (user === null) {
             page = <React.Fragment>
@@ -40,10 +41,7 @@ class SingleCase extends React.Component {
             </React.Fragment>
         } else {
             page = <React.Fragment>
-                
-                {/* <Map2 
-                ymaps={this.props.ymaps}/>
-                logged In */}
+            <MapCase doctorData = {trueUser} test = {this.state.adr}/>  
             </React.Fragment>
         }
         return (
@@ -53,6 +51,7 @@ class SingleCase extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    cases: state.cases.cases,
     user: state.user.currentUser,
     trueUser: state.user.trueUser
 })

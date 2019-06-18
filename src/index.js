@@ -15,6 +15,7 @@ import Register from './components/Auth/Register';
 import firebase from './firebase'
 import { setUser, clearUser, trueUser, allDoctors,createCases } from './components/actions/index'
 import SingleCase from './components/SingleCase';
+import MapCase from './components/MapCase'
 
 
 
@@ -71,6 +72,7 @@ class Index extends Component {
             <div>
                 <Button onClick = {this.handleSignOut}>Разлогиниться</Button>
                 <Switch>
+                    <Route exact path='/test' component={MapCase} />
                     <Route exact path='/' component={Home} />
                     <Route path='/cases' component={FakeCases} />
                     <Route exact path='/comp' component={FakeComp} />
