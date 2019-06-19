@@ -1,9 +1,9 @@
 import * as actionTypes from '../actions/types'
 
-import { combineReducers } from 'redux'
+import {combineReducers} from 'redux'
 
 const initialCasesState = {
-    cases: [],
+    cases:[], 
     doctors: [],
     // loading to add
 }
@@ -14,7 +14,7 @@ const casesReducer = (state = initialCasesState, action) => {
             return {
                 ...state,
                 cases: [...state.cases, ...action.payload.cases]
-            }
+        }
         case actionTypes.ALL_DOCTORS:
             return {
                 ...state,
@@ -26,18 +26,19 @@ const casesReducer = (state = initialCasesState, action) => {
 }
 
 const initialUserState = {
-    currentUser: null
+    currentUser:null,
+    trueUser: null,
 }
 
-const userReducer = (state = initialUserState, action) => {
+const userReducer = (state=initialUserState, action) => {
     switch (action.type) {
         case actionTypes.SET_USER:
-            return {
-                ...state,
-                currentUser: action.payload.currentUser
-            }
+        return {
+            ...state,
+            currentUser:action.payload.currentUser
+        }
         case actionTypes.TRUE_USER:
-            return {
+            return{
                 ...state,
                 trueUser: action.payload.trueUser
             }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { YMaps, Map, ZoomControl } from 'react-yandex-maps'
-import firebase from '../firebase'
-import { Button } from 'semantic-ui-react'
+
 
 const mapData = {
     center: [55.751574, 37.573856],
@@ -14,7 +13,7 @@ export default class MapCase extends React.Component {
     handleApiAvaliable = ymaps => {
 
         let multiRoute = new ymaps.multiRouter.MultiRoute({
-            referencePoints: [this.props.doctorData.address, 'Москва, метро Библиотека']
+            referencePoints: [this.props.doctorData, this.props.clientAddress]
         }, {
                 // Автоматически устанавливать границы карты так,
                 // чтобы маршрут был виден целиком.
@@ -26,9 +25,9 @@ export default class MapCase extends React.Component {
     render() {
         // console.log(this.state.casesRef);
 
-        // console.log(this.props.doctorData.address);
+        console.log(this.props);
         return (
-            this.props.test && this.props.doctorData && <YMaps>
+            this.props.doctorData && <YMaps>
                 <div style={{ position: 'absolute', left: '25%', right: '25%' }}>
                     <Map
                         defaultState={mapData}
@@ -40,7 +39,6 @@ export default class MapCase extends React.Component {
                     >
                         <ZoomControl />
                     </Map>
-                    <Button>Accept</Button><Button>Decline</Button>
                 </div>
             </YMaps>
         )
