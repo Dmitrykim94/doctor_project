@@ -39,7 +39,7 @@ class SingleCase extends React.Component {
                 {address}
                 <br />
                 Адрес доктора
-
+                
             </React.Fragment>
         } else if (user !== null) {
             page = <React.Fragment>
