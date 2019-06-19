@@ -8,7 +8,7 @@ import { Provider, connect } from 'react-redux'
 import combinedReducer from './components/reducers/index'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import FakeCases from './components/fakeCases'
-import { BrowserRouter as Router, Switch, Route, withRouter, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, withRouter, Link, HashRouter } from 'react-router-dom'
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import firebase from './firebase'
@@ -51,6 +51,7 @@ class Index extends Component {
             }
         })
     }
+
 
     getAllDoctors = () => {
         firebase.database().ref('users').on('child_added', snap => {
@@ -194,8 +195,8 @@ const IndexWithRouter = withRouter(connect(mapStateToProps, mapDispatchToProps)(
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router>
+        <HashRouter>
             <IndexWithRouter />
-        </Router>
+        </HashRouter>
     </Provider>,
     document.getElementById('root'))
