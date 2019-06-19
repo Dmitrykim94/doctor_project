@@ -1,6 +1,8 @@
 import React from 'react'
 import firebase from '../firebase'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
+import MapCase from './MapCase'
+import { Button } from 'semantic-ui-react'
 import { setUser } from './actions/index'
 
 
@@ -35,20 +37,19 @@ class SingleCase extends React.Component {
         let page;
         if (trueUser === null) {
             page = <React.Fragment>
-                Адрес клиента
+                <p>only doctor</p>
                 {address}
-                <br />
-                Адрес доктора
-
+                {/* this is {trueUser.address} */}
+                <MapCase doctorData={address} clientAddress={address}/>
             </React.Fragment>
         } else if (user !== null) {
             page = <React.Fragment>
-
-                Адрес клиента
-                {address}
-                <br />
-                Адрес доктора
-                {trueUser.address}
+                <p>doctor</p>
+                 CLIENT {address}
+                 <br/>
+                  DOCTOR {trueUser.address}
+                <MapCase doctorData={this.props.trueUser.address} clientAddress={address}/>
+                <Button>Accept</Button><Button>Decline</Button>
             </React.Fragment>
         }
         return (

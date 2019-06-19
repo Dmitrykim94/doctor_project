@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import LengthPrinter from './components/Map'
+import { LengthPrinter } from './components/Map'
 import FakeComp from './components/fakeComp'
 import { createStore } from 'redux'
-import { Button, Menu, Icon } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 import { Provider, connect } from 'react-redux'
 import combinedReducer from './components/reducers/index'
 import { composeWithDevTools } from 'redux-devtools-extension'
@@ -14,6 +14,7 @@ import Register from './components/Auth/Register';
 import firebase from './firebase'
 import { setUser, clearUser, trueUser, allDoctors, createCases } from './components/actions/index'
 import SingleCase from './components/SingleCase';
+import MapCase from './components/MapCase'
 
 
 const store = createStore(combinedReducer, composeWithDevTools())
@@ -165,6 +166,7 @@ class Index extends Component {
                 </Link>
 
                 <Switch>
+                    <Route exact path='/test' component={MapCase} />
                     <Route path='/cases' component={FakeCases} />
                     <Route exact path='/comp' component={FakeComp} />
                     <Route path='/register' component={Register} />
