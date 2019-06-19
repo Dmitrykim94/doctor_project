@@ -76,10 +76,11 @@ class Index extends Component {
         const { activeItem } = this.state.activeItem;
 
         if (this.props.user) {
-            page = (<Menu secondary>
+            page = (<Menu style={{ fontSize: '20px', backgroundColor: '#331E38', fontColor: 'white' }} secondary>
                 <Link to='/'>
                     <Menu.Item
                         name='home'
+                        style={{ color: 'white' }}
                         active={activeItem === 'home'}
                         onClick={this.handleItemClick}
                     />
@@ -88,6 +89,8 @@ class Index extends Component {
                 <Link to='/map'>
                     <Menu.Item
                         name='Map'
+                        style={{ color: 'white' }}
+
                         active={activeItem === 'home'}
                         onClick={this.handleItemClick}
                     />
@@ -95,6 +98,8 @@ class Index extends Component {
                 <Link to='/cases'>
                     <Menu.Item
                         name='Cases'
+                        style={{ color: 'white' }}
+
                         active={activeItem === 'home'}
                         onClick={this.handleItemClick}
                     />
@@ -102,15 +107,25 @@ class Index extends Component {
 
 
                 <Menu.Menu position='right'>
-                    <button onClick={this.handleSignOut}>Logout</button>
+                    <Menu.Item
+                        name='logout'
+                        style={{ color: 'white' }}
+
+                        active={activeItem === 'logout'}
+                        onClick={this.handleSignOut}
+                        // onClick={this.handleItemClick}
+                    />
+                    {/* <button onClick={this.handleSignOut}>Logoutaa</button> */}
                 </Menu.Menu>
                 
             </Menu>)
         } else {
-            page = (<Menu secondary>
+            page = (<Menu secondary style={{ fontSize: '20px', backgroundColor: '#331E38', fontColor: 'white' }}>
                 <Link to='/'>
                     <Menu.Item
                         name='home'
+                        style={{color: 'white'}}
+
                         active={activeItem === 'home'}
                         onClick={this.handleItemClick}
                     />
@@ -118,6 +133,8 @@ class Index extends Component {
                 <Link to='/register'>
                     <Menu.Item
                         name='Registration'
+                        style={{color: 'white'}}
+
                         active={activeItem === 'messages'}
                         onClick={this.handleItemClick}
                     />
@@ -126,6 +143,8 @@ class Index extends Component {
                 <Link to='/login'>
                     <Menu.Item
                         name='Login'
+                        style={{color: 'white'}}
+
                         active={activeItem === 'home'}
                         onClick={this.handleItemClick}
                     />
@@ -139,8 +158,9 @@ class Index extends Component {
             <div>
                 {page}
                 <Link to='/comp'>
-                    <Icon.Group  size='big'>
-                        <Icon color='red' size='massive' name='exclamation circle' />
+                <h2 style={{ display: 'flex', justifyContent: 'center'}}>Нажмите для вызова врача</h2>
+                    <Icon.Group style={{ display: 'flex', justifyContent: 'center', color: '#E63B2E' }} size='big'>
+                        <Icon size='massive' name='exclamation circle' />
                     </Icon.Group>
                 </Link>
 
