@@ -59,7 +59,9 @@ class Index extends Component {
     }
 
     handleSignOut = () => {
-        firebase.auth().signOut()
+        console.log('click')
+        firebase.auth().signOut().then(() => {console.log('user logged out')}).catch(e => console.log(e))
+        this.props.clearUser()
     }
 
     getTrueUser = (uid) => {
@@ -96,15 +98,12 @@ class Index extends Component {
                         onClick={this.handleItemClick}
                     />
                 </Link>
-                <Menu.Menu position='right'>
-                    <Menu.Item
-                        name='logout'
-                        active={activeItem === 'logout'}
-                        onClick={this.handleSignOut}
-                        onClick={this.handleItemClick}
-                    />
-                </Menu.Menu>
 
+
+                <Menu.Menu position='right'>
+                    <button onClick={this.handleSignOut}>Logoutaa</button>
+                </Menu.Menu>
+                
             </Menu>)
         } else {
             page = (<Menu secondary>
