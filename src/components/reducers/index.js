@@ -26,8 +26,7 @@ const casesReducer = (state = initialCasesState, action) => {
 }
 
 const initialUserState = {
-    currentUser: {},
-    trueUser: {}
+    currentUser: null
 }
 
 const userReducer = (state = initialUserState, action) => {
@@ -43,6 +42,11 @@ const userReducer = (state = initialUserState, action) => {
                 trueUser: action.payload.trueUser
             }
 
+        case actionTypes.CLEAR_USER:
+            return {
+                ...state,
+                currentUser: null
+            }
         default:
             return state
     }

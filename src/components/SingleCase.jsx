@@ -28,20 +28,26 @@ class SingleCase extends React.Component {
         })
     }
 
-    render() {
-        // console.log(this.props.history);
-        
-        const { user, trueUser, cases } = this.props
-        // console.log(cases);
-
+    render(){
+        const { user, trueUser } = this.props
+        const { address, desc, howto, tel } = this.state
         let page;
         if (user === null) {
             page = <React.Fragment>
-                {/* <Map /> */}
+                Адрес клиента
+                {address}
+                <br/>
+                Адрес доктора
+
             </React.Fragment>
         } else {
             page = <React.Fragment>
-            <MapCase doctorData = {trueUser} test = {this.state.adr}/>  
+
+                Адрес клиента
+                {address}
+                <br/>
+                Адрес доктора
+                {this.props.trueUser.address}
             </React.Fragment>
         }
         return (
@@ -53,7 +59,7 @@ class SingleCase extends React.Component {
 const mapStateToProps = state => ({
     cases: state.cases.cases,
     user: state.user.currentUser,
-    trueUser: state.user.trueUser
+    trueUser: state.user.trueUser,
 })
 
 export default connect(mapStateToProps)(SingleCase)

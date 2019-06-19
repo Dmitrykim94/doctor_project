@@ -20,7 +20,6 @@ class FakeComp extends React.Component {
     }
 
     sendText = async (data) => {
-        console.log(data)
         await fetch('/send-sms', {
             method: 'POST',
             headers: {
