@@ -2,7 +2,9 @@ import React from 'react'
 import firebase from '../firebase'
 // import { cases, doctors } from '../fakeData'
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { Form, Button } from 'semantic-ui-react'
+
 
 
 class FakeComp extends React.Component {
@@ -25,7 +27,7 @@ class FakeComp extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-             body: JSON.stringify({
+            body: JSON.stringify({
                 text: data
             })
         })
@@ -38,7 +40,7 @@ class FakeComp extends React.Component {
 
         const key = casesRef.push().key
 
-        this.setState({case:key})
+        this.setState({ case: key })
 
         const newCase = {
             id: key,
@@ -54,6 +56,7 @@ class FakeComp extends React.Component {
             .child(key)
             .update(newCase)
             .then(this.sendText({
+                address: newCase.address,
                 desc: newCase.desc,
                 address: newCase.address,
                 tel: newCase.tel,
@@ -72,16 +75,13 @@ class FakeComp extends React.Component {
     render() {
         return (
             <div>
-                <form action="post" onSubmit={this.handleSubmit}>
-                    <input required type="text" placeholder='desc' name='desc' onChange={this.handleChange} />
-                    <br />
-                    <input required type="text" placeholder='address' name='address' onChange={this.handleChange} />
-                    <br />
-                    <input required type="text" placeholder='tel' name='tel' onChange={this.handleChange} />
-                    <br />
-                    <input required type="text" placeholder='howto' name='howto' onChange={this.handleChange} />
-                    <button>submit</button>
-                </form>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Input required name='desc' icon='user' placeholder='Опишите вашу проблему' onChange={this.handleChange} />
+                    <Form.Input required name='address' icon='mail' placeholder='Укажите адрес' onChange={this.handleChange} />
+                    <Form.Input required name='tel' icon='home' placeholder='Номер телефона' onChange={this.handleChange} />
+                    <Form.Input required name='howto' icon='phone' placeholder='Как попасть к вам в квартиру' onChange={this.handleChange} />
+                    <Button>Submit</Button>
+                </Form>
             </div>
         )
     }
