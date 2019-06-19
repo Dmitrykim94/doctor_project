@@ -1,51 +1,57 @@
 import React from 'react'
 import firebase from '../firebase'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import { setUser } from './actions/index'
 
 
 class SingleCase extends React.Component {
     state = {
-        address:'',
+        address: 'not null',
         desc: '',
-        howto:'',
-        tel:'',
+        howto: '',
+        tel: '',
     }
 
     componentDidMount() {
-       let id = window.location.href.match('([^\/]+$)')[0]
-       firebase.database().ref('cases').child(id).once('value', snap => {
-           this.setState({
-               address: snap.val().address,
-               desc: snap.val().desc,
-               howto: snap.val().howto,
-               tel: snap.val().tel
-           })
-       })
+        console.log('mount')
+        let id = window.location.href.match('([^\/]+$)')[0]
+        firebase.database().ref('cases').child(id).once('value', snap => {
+            console.log(this)
+            this.setState({
+                address: snap.val().address,
+                desc: snap.val().desc,
+                howto: snap.val().howto,
+                tel: snap.val().tel
+            })
+        }).then(console.log('user is here'))
+
     }
 
-    render(){
+    render() {
+        console.log('render')
         const { user, trueUser } = this.props
         const { address, desc, howto, tel } = this.state
+        console.log(address)
         let page;
-        if(user === null) {
+        if (trueUser === null) {
             page = <React.Fragment>
                 Адрес клиента
                 {address}
-                <br/>
+                <br />
                 Адрес доктора
 
             </React.Fragment>
-        }else{
+        } else if (user !== null) {
             page = <React.Fragment>
 
                 Адрес клиента
                 {address}
-                <br/>
+                <br />
                 Адрес доктора
-                {this.props.trueUser.address}
+                {trueUser.address}
             </React.Fragment>
         }
-        return(
+        return (
             page
         )
     }
@@ -56,4 +62,4 @@ const mapStateToProps = state => ({
     trueUser: state.user.trueUser,
 })
 
-export default connect(mapStateToProps) (SingleCase)
+export default connect(mapStateToProps, { setUser })(SingleCase)

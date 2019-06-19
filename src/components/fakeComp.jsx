@@ -56,13 +56,13 @@ class FakeComp extends React.Component {
         casesRef
             .child(key)
             .update(newCase)
-            .then(this.sendText({
-                address: newCase.address,
-                desc: newCase.desc,
-                address: newCase.address,
-                tel: newCase.tel,
-                howto: newCase.howto
-            }))
+            // .then(this.sendText({
+            //     address: newCase.address,
+            //     desc: newCase.desc,
+            //     address: newCase.address,
+            //     tel: newCase.tel,
+            //     howto: newCase.howto
+            // }))
             .then(() => this.props.history.push(newCase.id))
     }
 
