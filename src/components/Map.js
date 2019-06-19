@@ -88,7 +88,7 @@ class Start extends React.Component {
                 }}
             >
                 <p>the closest address is {this.state.closest}</p>
-                <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} >
+                <Map  width="100%" height='320px' defaultState={{ center: [55.75, 37.57], zoom: 9 }} >
                     {this.state.coordinates.map((item) => {
                         return (
                             <Placemark

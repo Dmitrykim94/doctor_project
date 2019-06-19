@@ -37,9 +37,7 @@ class FakeCases extends React.Component {
 
 
 
-    handleOtklik = (id) => {
-        // console.log(id)
-    }
+
 
     render() {
         const { post } = this.state
