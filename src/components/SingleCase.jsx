@@ -13,7 +13,6 @@ class SingleCase extends React.Component {
 
     componentDidMount() {
        let id = window.location.href.match('([^\/]+$)')[0]
-       console.log(id)
        firebase.database().ref('cases').child(id).once('value', snap => {
            this.setState({
                address: snap.val().address,
@@ -26,7 +25,6 @@ class SingleCase extends React.Component {
 
     render(){
         const { user, trueUser } = this.props
-        console.log(trueUser)
         let page;
         if(user === null) {
             page = <React.Fragment>
