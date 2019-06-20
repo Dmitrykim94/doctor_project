@@ -50,8 +50,6 @@ class FakeComp extends React.Component {
                 await pushed.push(json.ymaps.GeoObjectCollection.featureMember[0].GeoObject.name)
             });
             await this.setState({ foundAddress: pushed[0] })
-            console.log(this.state);
-            
         });
     }
 
@@ -75,13 +73,12 @@ class FakeComp extends React.Component {
         casesRef
             .child(key)
             .update(newCase)
-            // .then(this.sendText({
-            //     address: newCase.address,
-            //     desc: newCase.desc,
-            //     address: newCase.address,
-            //     tel: newCase.tel,
-            //     howto: newCase.howto
-            // }))
+            .then(this.sendText({
+                address: newCase.address,
+                desc: newCase.desc,
+                tel: newCase.tel,
+                howto: newCase.howto
+            }))
             .then(() => this.props.history.push(newCase.id))
     }
 

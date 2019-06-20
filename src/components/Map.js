@@ -18,9 +18,7 @@ class Start extends React.Component {
         closest: null
     }
 
-    async componentDidMount() {
-        console.log(this.props);
-        
+    async componentDidMount() {   
         this._isMounted = true;
         this.props.ymaps.route(this.props.route).then(route => {
             if (this._isMounted === true) {
