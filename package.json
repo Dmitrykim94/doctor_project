@@ -20,7 +20,8 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "semantic-ui-react": "^0.87.1",
-    "twilio": "^3.32.0"
+    "twilio": "^3.32.0",
+    "xml-to-json-stream": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

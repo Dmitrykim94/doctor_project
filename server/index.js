@@ -32,6 +32,7 @@ app.post('/send-sms', function (req, res) {
         Адрес: ${req.body.text.address}
         Телефон: ${req.body.text.tel}
         Как попасть в квартиру: ${req.body.text.howto}
+        Перейдите по ссылке, чтобы подтвердить вызов: sdfsdf/#/${req.body.text.id}
         `
     })
         .then(() => {

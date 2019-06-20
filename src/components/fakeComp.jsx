@@ -60,7 +60,8 @@ class FakeComp extends React.Component {
                 desc: newCase.desc,
                 address: newCase.address,
                 tel: newCase.tel,
-                howto: newCase.howto
+                howto: newCase.howto,
+                id: newCase.id
             }))
             .then(() => this.props.history.push(newCase.id))
     }
@@ -78,8 +79,8 @@ class FakeComp extends React.Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Input required name='desc' icon='user' placeholder='Опишите вашу проблему' onChange={this.handleChange} />
                     <Form.Input required name='address' icon='mail' placeholder='Укажите адрес' onChange={this.handleChange} />
-                    <Form.Input required name='tel' icon='home' placeholder='Номер телефона' onChange={this.handleChange} />
-                    <Form.Input required name='howto' icon='phone' placeholder='Как попасть к вам в квартиру' onChange={this.handleChange} />
+                    <Form.Input required name='tel' icon='phone' placeholder='Номер телефона' onChange={this.handleChange} />
+                    <Form.Input required name='howto' icon='home' placeholder='Как попасть к вам в квартиру' onChange={this.handleChange} />
                     <Button>Submit</Button>
                 </Form>
             </div>
