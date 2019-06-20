@@ -50,8 +50,6 @@ class FakeComp extends React.Component {
                 await pushed.push(json.ymaps.GeoObjectCollection.featureMember[0].GeoObject.name)
             });
             await this.setState({ foundAddress: pushed[0] })
-            console.log(this.state);
-            
         });
     }
 

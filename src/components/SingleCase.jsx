@@ -46,14 +46,13 @@ class SingleCase extends React.Component {
     render() {
         console.log('render')
         const { user, trueUser } = this.props
-        const { address, desc, howto, tel, doctorsAddress } = this.state
+        const { address, doctorsAddress } = this.state
         console.log(address)
         let page;
         if (trueUser === null) {
             page = <React.Fragment>
                 <p>{doctorsAddress.length>0 ? doctorsAddress : 'В поисках доктора'}</p>
                 {address}
-                {/* this is {trueUser.address} */}
                 <MapCase doctorData={doctorsAddress.length > 0 ? doctorsAddress : address} clientAddress={address} />
             </React.Fragment>
         } else if (user !== null) {
