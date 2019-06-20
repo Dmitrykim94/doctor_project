@@ -10,6 +10,7 @@ const mapData = {
 
 
 export default class MapCase extends React.Component {
+    yandexMaps = null;
 
     state = {
         doctorData: '',
@@ -30,12 +31,23 @@ export default class MapCase extends React.Component {
             await this.setState({
                 doctorData: snap.val()
             });
+
+            if (this.yandexMaps) {
+                let multiRoute = new this.yandexMaps.multiRouter.MultiRoute({
+                    referencePoints: [this.state.doctorData || this.props.doctorData, this.state.clientAddress || this.props.clientAddress]
+                }, {
+                        // Автоматически устанавливать границы карты так,
+                        // чтобы маршрут был виден целиком.
+                        boundsAutoApply: true
+                    });
+                this.map.geoObjects.add(multiRoute);
+            }           
  
         })
     }
     
     handleApiAvaliable = ymaps => {
-
+        this.yandexMaps = ymaps;
         this.setState({
             doctorData: this.props.doctorData,
             clientAddress: this.props.clientAddress
