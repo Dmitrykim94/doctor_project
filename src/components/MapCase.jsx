@@ -1,5 +1,6 @@
 import React from 'react'
 import { YMaps, Map, ZoomControl } from 'react-yandex-maps'
+import firebase from '../firebase'
 
 
 const mapData = {
@@ -9,11 +10,51 @@ const mapData = {
 
 
 export default class MapCase extends React.Component {
+    yandexMaps = null;
 
+    state = {
+        doctorData: '',
+        clientAddress: ''
+    }
+
+    componentDidMount() {
+        console.log('update')
+        let id = window.location.href.match('([^\/]+$)')[0]
+        this.addListener(id)
+
+    }
+
+    addListener = id => {
+        console.log(this.state.doctorData)
+        firebase.database().ref('cases').child(id).child('doctors').on('child_added', async(snap) => {
+
+            await this.setState({
+                doctorData: snap.val()
+            });
+
+            if (this.yandexMaps) {
+                let multiRoute = new this.yandexMaps.multiRouter.MultiRoute({
+                    referencePoints: [this.state.doctorData || this.props.doctorData, this.state.clientAddress || this.props.clientAddress]
+                }, {
+                        // Автоматически устанавливать границы карты так,
+                        // чтобы маршрут был виден целиком.
+                        boundsAutoApply: true
+                    });
+                this.map.geoObjects.add(multiRoute);
+            }           
+ 
+        })
+    }
+    
     handleApiAvaliable = ymaps => {
+        this.yandexMaps = ymaps;
+        this.setState({
+            doctorData: this.props.doctorData,
+            clientAddress: this.props.clientAddress
+        })
 
         let multiRoute = new ymaps.multiRouter.MultiRoute({
-            referencePoints: [this.props.doctorData, this.props.clientAddress]
+            referencePoints: [this.state.doctorData || this.props.doctorData, this.state.clientAddress || this.props.clientAddress]
         }, {
                 // Автоматически устанавливать границы карты так,
                 // чтобы маршрут был виден целиком.
@@ -25,7 +66,6 @@ export default class MapCase extends React.Component {
     render() {
         // console.log(this.state.casesRef);
 
-        console.log(this.props);
         return (
             this.props.doctorData && <YMaps>
                 <div style={{ position: 'absolute', left: '25%', right: '25%' }}>
