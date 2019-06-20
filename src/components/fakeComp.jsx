@@ -2,7 +2,7 @@ import React from 'react'
 import firebase from '../firebase'
 // import { cases, doctors } from '../fakeData'
 import { connect } from "react-redux";
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react'
 
 
@@ -19,9 +19,7 @@ class FakeComp extends React.Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-
     sendText = async (data) => {
-        console.log(data)
         await fetch('/send-sms', {
             method: 'POST',
             headers: {

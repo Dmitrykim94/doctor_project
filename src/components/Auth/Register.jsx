@@ -63,8 +63,8 @@ class Register extends React.Component {
                 <Form.Input name='address' icon ='home' placeholder = 'Адрес' onChange={this.handleChange}/>
                 <Form.Input name='phone' icon ='phone' placeholder = 'Телефон' onChange={this.handleChange}/>
                 <Form.Input name='type' icon ='add' placeholder = 'Тип' onChange={this.handleChange}/>
-                <Form.Input name='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
-                <Form.Input name='passwordConfirmation' icon ='lock' placeholder = 'Подтвердите пароль' onChange={this.handleChange}/>
+                <Form.Input name='password' type='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
+                <Form.Input name='passwordConfirmation' type='password' icon ='lock' placeholder = 'Подтвердите пароль' onChange={this.handleChange}/>
                 <Button>Submit</Button>
             </Form>
         )
