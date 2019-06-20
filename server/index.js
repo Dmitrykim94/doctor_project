@@ -25,7 +25,7 @@ app.post('/send-sms', function (req, res) {
     res.header('Content-Type', 'application/json');
 
     client.messages.create({
-        to: TO_NUMBER,
+        to: '+79167194665',
         from: FROM_NUMBER,
         body: `
         Описание: ${req.body.text.desc}

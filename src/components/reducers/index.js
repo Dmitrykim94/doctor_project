@@ -27,6 +27,7 @@ const casesReducer = (state = initialCasesState, action) => {
 
 const initialUserState = {
     currentUser:null,
+    trueUser: null,
 }
 
 const userReducer = (state=initialUserState, action) => {

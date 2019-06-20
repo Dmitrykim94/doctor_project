@@ -1,51 +1,72 @@
 import React from 'react'
 import firebase from '../firebase'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import MapCase from './MapCase'
+import { Button } from 'semantic-ui-react'
+import { setUser } from './actions/index'
 
 
 class SingleCase extends React.Component {
     state = {
-        address:'',
+        address: '',
         desc: '',
-        howto:'',
-        tel:'',
+        howto: '',
+        tel: '',
+        doctorsAddress: '',
     }
 
     componentDidMount() {
-       let id = window.location.href.match('([^\/]+$)')[0]
-       firebase.database().ref('cases').child(id).once('value', snap => {
-           this.setState({
-               address: snap.val().address,
-               desc: snap.val().desc,
-               howto: snap.val().howto,
-               tel: snap.val().tel
-           })
-       })
+        console.log('mount')
+        let id = window.location.href.match('([^\/]+$)')[0]
+        firebase.database().ref('cases').child(id).once('value', snap => {
+            console.log(this)
+            this.setState({
+                address: snap.val().address,
+                desc: snap.val().desc,
+                howto: snap.val().howto,
+                tel: snap.val().tel
+            })
+        }).then(console.log('user is here'))
+        this.addLocationListener(id)
     }
 
-    render(){
+    handleAccept = () => {
+        let id = window.location.href.match('([^\/]+$)')[0]
+        firebase.database().ref('cases').child(id).child('doctors').push(this.props.trueUser.address)
+    }
+
+    addLocationListener = (id) => {
+        firebase.database().ref('cases').child(id).child('doctors').on('child_added', snap => {
+            this.setState({doctorsAddress:snap.val()})
+        })
+    }
+    componentDidUpdate() {
+    }
+
+    render() {
+        console.log('render')
         const { user, trueUser } = this.props
-        const { address, desc, howto, tel } = this.state
+        const { address, desc, howto, tel, doctorsAddress } = this.state
+        console.log(address)
         let page;
-        if(user === null) {
+        if (trueUser === null) {
             page = <React.Fragment>
-                Адрес клиента
+                <p>{doctorsAddress.length>0 ? doctorsAddress : 'В поисках доктора'}</p>
                 {address}
-                <br/>
-                Адрес доктора
-
+                {/* this is {trueUser.address} */}
+                <MapCase doctorData={doctorsAddress.length > 0 ? doctorsAddress : address} clientAddress={address} />
             </React.Fragment>
-        }else{
+        } else if (user !== null) {
             page = <React.Fragment>
-
-                Адрес клиента
-                {address}
-                <br/>
-                Адрес доктора
-                {this.props.trueUser.address}
+                <p>doctor</p>
+                CLIENT {address}
+                <br />
+                DOCTOR {trueUser.address}
+                <MapCase doctorData={this.props.trueUser.address} clientAddress={address} />
+                <Button onClick={this.handleAccept}>Accept</Button><Button>Decline</Button>
             </React.Fragment>
         }
-        return(
+        return (
             page
         )
     }
@@ -56,4 +77,4 @@ const mapStateToProps = state => ({
     trueUser: state.user.trueUser,
 })
 
-export default connect(mapStateToProps) (SingleCase)
+export default connect(mapStateToProps, { setUser })(SingleCase)

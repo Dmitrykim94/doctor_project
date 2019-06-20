@@ -29,7 +29,7 @@ class Login extends React.Component {
         return(
             <Form onSubmit = {this.handleSubmit} >
                 <Form.Input name='email' icon ='mail' placeholder = 'e-mail' onChange={this.handleChange}/>
-                <Form.Input name='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
+                <Form.Input name='password' type='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
                 <Button> Login </Button>
             </Form>
         )
