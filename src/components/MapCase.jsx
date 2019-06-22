@@ -43,7 +43,6 @@ export default class MapCase extends React.Component {
                 this.map.geoObjects.remove(this.removed);
                 this.map.geoObjects.add(multiRoute);
             }
-
         })
     }
 
@@ -70,7 +69,7 @@ export default class MapCase extends React.Component {
 
         return (
             this.props.doctorData && <YMaps>
-                <div style={{ position: 'absolute', left: '25%', right: '25%' }}>
+                <div style={{ position: 'absolute', left: '0%', right: '25%', top: '20%' }}>
                     <Map
                         defaultState={mapData}
                         modules={['multiRouter.MultiRoute']}

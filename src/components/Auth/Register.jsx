@@ -58,14 +58,15 @@ class Register extends React.Component {
     render(){
         return(
             <Form onSubmit = {this.handleSubmit}>
-                <Form.Input name='name' icon ='user' placeholder = 'Имя' onChange={this.handleChange}/>
-                <Form.Input name='email' icon ='mail' placeholder = 'e-mail' onChange={this.handleChange}/>
-                <Form.Input name='address' icon ='home' placeholder = 'Адрес' onChange={this.handleChange}/>
-                <Form.Input name='phone' icon ='phone' placeholder = 'Телефон' onChange={this.handleChange}/>
-                <Form.Input name='type' icon ='add' placeholder = 'Тип' onChange={this.handleChange}/>
-                <Form.Input name='password' type='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
-                <Form.Input name='passwordConfirmation' type='password' icon ='lock' placeholder = 'Подтвердите пароль' onChange={this.handleChange}/>
-                <Button>Submit</Button>
+                <br/>
+                <Form.Input style={{width:'500px'}} name='name' icon ='user' placeholder = 'Имя' onChange={this.handleChange}/>
+                <Form.Input style={{width:'500px'}} name='email' icon ='mail' placeholder = 'e-mail' onChange={this.handleChange}/>
+                <Form.Input style={{width:'500px'}} name='address' icon ='home' placeholder = 'Адрес' onChange={this.handleChange}/>
+                <Form.Input style={{width:'500px'}} name='phone' icon ='phone' placeholder = 'Телефон' onChange={this.handleChange}/>
+                <Form.Input style={{width:'500px'}} name='type' icon ='add' placeholder = 'Тип' onChange={this.handleChange}/>
+                <Form.Input style={{width:'500px'}} name='password' type='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
+                <Form.Input style={{width:'500px'}} name='passwordConfirmation' type='password' icon ='lock' placeholder = 'Подтвердите пароль' onChange={this.handleChange}/>
+                <Button color='green' style={{width:'500px'}}>Зарегистрироваться</Button>
             </Form>
         )
     }
