@@ -14,6 +14,7 @@ import Register from './components/Auth/Register';
 import firebase from './firebase'
 import { setUser, clearUser, trueUser, allDoctors, createCases } from './components/actions/index'
 import SingleCase from './components/SingleCase';
+import Home from './components/Home'
 import MapCase from './components/MapCase'
 
 
@@ -106,7 +107,9 @@ class Index extends Component {
                                 style={{ color: 'white' }}
                                 active={activeItem === 'home'}
                                 onClick={this.handleItemClick}
-                            />
+                            >
+                            </Menu.Item>
+
                         </Link>
                         <Link to='/register'>
                             <Menu.Item
@@ -127,12 +130,7 @@ class Index extends Component {
                             />
                         </Link>
                     </Menu>
-                    <Link to='/comp'>
-                        <h2 style={{ display: 'flex', justifyContent: 'center' }}>Нажмите для вызова врача</h2>
-                        <Icon.Group style={{ display: 'flex', justifyContent: 'center', color: '#E63B2E' }} size='big'>
-                            <Icon size='massive' name='exclamation circle' />
-                        </Icon.Group>
-                    </Link>
+
                 </div>
             )
         }
@@ -150,6 +148,7 @@ class Index extends Component {
                 </Link> */}
 
                 <Switch>
+                    <Route exact path='/' component={Home} />
                     <Route exact path='/test' component={MapCase} />
                     <Route path='/cases' component={FakeCases} />
                     <Route exact path='/comp' component={FakeComp} />

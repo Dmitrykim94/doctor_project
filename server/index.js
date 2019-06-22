@@ -28,11 +28,9 @@ app.post('/send-sms', function (req, res) {
         to: '+79167194665',
         from: FROM_NUMBER,
         body: `
-        Описание: ${req.body.text.desc}
         Адрес: ${req.body.text.address}
         Телефон: ${req.body.text.tel}
-        Как попасть в квартиру: ${req.body.text.howto}
-        Перейдите по ссылке, чтобы подтвердить вызов: sdfsdf/#/${req.body.text.id}
+        Перейдите по ссылке, чтобы подтвердить вызов: link/#/${req.body.text.id}
         `
     })
         .then(() => {
