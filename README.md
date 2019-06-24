@@ -2,7 +2,6 @@ Elbrus bootcamp group project.
 
 Финальный групповой проект в Elbrus bootcamp. 
 
-
 <b>Доктор рядом</b> - Сервис для экстренного поиска врача рядом
 
 <b><h3>Our mission:</h3><hr></hr></b>
@@ -17,18 +16,17 @@ Elbrus bootcamp group project.
 
 <b><h3>MVP Functionality:</h3><hr></hr></b>
 <ul>
- <li>Cоздание собственного маршрута с описанием</li>
- <li>Просмотр всех созданных маршрутов</li>
- <li>Возможность комментирования</li>
- <li>Форум</li>
+ <li>Cоздание профайла доктора</li>
+ <li>Построение маршрута на карте от доктора до пациента</li>
+ <li>Отправка смс</li>
 </ul>
 
 <b><h3>Authors:</h3><hr></hr></b>
 <ul>
- <li><a href="https://github.com/AlimovaKatrin">Катрин Алимова</li>
- <li><a href="https://github.com/Andr-07">Андрей Лубочников</li>
- <li><a href="https://github.com/followname">Константин Мерешко</li>
+ <li><a href="https://github.com/Dmitryure">Дмитрий Уткин</li>
+ <li><a href="https://github.com/GeorgeAzz">Азиев Георгий</li>
+ <li><a href="https://github.com/Dmitrykim94">Дмитрий Ким</li>
 </ul>
 
 <b><h3>Technologies:</h3><hr></hr></b>
-Node, React, Express, MongoDB, Mongoose, Webpack, Babel, Semantic ui, API (Google, Yandex maps)
+Node, React, Express, MongoDB, Mongoose, Webpack, Babel, Semantic ui, API (Google, Yandex maps), Firebase.
