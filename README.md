@@ -1,7 +1,3 @@
-Elbrus bootcamp group project.
-
-Финальный групповой проект в Elbrus bootcamp. 
-
 <b>Доктор рядом</b> - Сервис для экстренного поиска врача рядом
 
 <b><h3>Our mission:</h3><hr></hr></b>
