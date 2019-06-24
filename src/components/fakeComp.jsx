@@ -4,15 +4,18 @@ import firebase from '../firebase'
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react'
-
-
+const xmlToJson = require('xml-to-json-stream');
+const parser = xmlToJson({ attributeMode: false });
+// const key = `9c5a9e34-2897-4d0e-8fc7-7908574f4150`
+// const keyKim = `5fbca2da-4afa-416a-97f8-463929f62c71`
 
 class FakeComp extends React.Component {
     state = {
         casesRef: firebase.database().ref('cases'),
         case: '',
         sms: '',
-        caseId: ''
+        caseId: '',
+        foundAddress: ''
     }
 
     handleChange = (e) => {
@@ -32,10 +35,27 @@ class FakeComp extends React.Component {
         })
     }
 
-
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            console.log(position.coords.latitude, 'latitude');
+            console.log(position.coords.longitude, 'longitude');
+            let res = await fetch(
+                encodeURI(`https://geocode-maps.yandex.ru/1.x/?apikey=9c5a9e34-2897-4d0e-8fc7-7908574f4150&geocode=${position.coords.longitude},${position.coords.latitude}`)
+            )
+            let geoLocation = await res.text();
+            let pushed = [];
+            parser.xmlToJson(geoLocation, async (err, json) => {
+                if (err) {
+                    console.log(err);
+                }
+                await pushed.push(json.ymaps.GeoObjectCollection.featureMember[0].GeoObject.name)
+            });
+            await this.setState({ foundAddress: pushed[0] })
+        });
+    }
 
     addCase = () => {
-        const { desc, tel, howto, casesRef, address } = this.state
+        const { tel, casesRef, address } = this.state
 
         const key = casesRef.push().key
 
@@ -43,10 +63,8 @@ class FakeComp extends React.Component {
 
         const newCase = {
             id: key,
-            desc: desc,
             address: address,
             tel: tel,
-            howto: howto,
         }
 
         this.setState({ caseId: newCase.id })
@@ -54,19 +72,18 @@ class FakeComp extends React.Component {
         casesRef
             .child(key)
             .update(newCase)
-            // .then(this.sendText({
-            //     address: newCase.address,
-            //     desc: newCase.desc,
-            //     address: newCase.address,
-            //     tel: newCase.tel,
-            //     howto: newCase.howto
-            // }))
+            .then(this.sendText({
+                address: newCase.address,
+                tel: newCase.tel,
+                id: newCase.id
+            }))
             .then(() => this.props.history.push(newCase.id))
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
         this.addCase()
+
     }
 
 
@@ -74,12 +91,14 @@ class FakeComp extends React.Component {
     render() {
         return (
             <div>
+
                 <Form onSubmit={this.handleSubmit}>
-                    <Form.Input required name='desc' icon='user' placeholder='Опишите вашу проблему' onChange={this.handleChange} />
-                    <Form.Input required name='address' icon='mail' placeholder='Укажите адрес' onChange={this.handleChange} />
-                    <Form.Input required name='tel' icon='home' placeholder='Номер телефона' onChange={this.handleChange} />
-                    <Form.Input required name='howto' icon='phone' placeholder='Как попасть к вам в квартиру' onChange={this.handleChange} />
-                    <Button>Submit</Button>
+                    <br/>
+                    {/* <Form.Input required name='desc' icon='user' placeholder='Опишите вашу проблему' onChange={this.handleChange} /> */}
+                    <Form.Input style={{width:'500px'}}  required name='address' icon='mail' placeholder='Укажите адрес' defaultValue={this.state.foundAddress} onChange={this.handleChange} />
+                    <Form.Input style={{width:'500px'}} required name='tel' icon='phone' placeholder='Номер телефона' onChange={this.handleChange} />
+                    {/* <Form.Input required name='howto' icon='home' placeholder='Как попасть к вам в квартиру' onChange={this.handleChange} /> */}
+                    <Button color='green' style={{width:'500px'}}>Найти доктора</Button>
                 </Form>
             </div>
         )

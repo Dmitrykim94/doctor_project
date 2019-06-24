@@ -22,8 +22,6 @@ class SingleCase extends React.Component {
             console.log(this)
             this.setState({
                 address: snap.val().address,
-                desc: snap.val().desc,
-                howto: snap.val().howto,
                 tel: snap.val().tel
             })
         }).then(console.log('user is here'))
@@ -46,24 +44,19 @@ class SingleCase extends React.Component {
     render() {
         console.log('render')
         const { user, trueUser } = this.props
-        const { address, desc, howto, tel, doctorsAddress } = this.state
+        const { address, doctorsAddress } = this.state
         console.log(address)
         let page;
         if (trueUser === null) {
             page = <React.Fragment>
-                <p>{doctorsAddress.length>0 ? doctorsAddress : 'В поисках доктора'}</p>
-                {address}
-                {/* this is {trueUser.address} */}
+                <p>{doctorsAddress.length>0 ? doctorsAddress :<h1> В поисках доктора</h1>}</p>
                 <MapCase doctorData={doctorsAddress.length > 0 ? doctorsAddress : address} clientAddress={address} />
             </React.Fragment>
         } else if (user !== null) {
             page = <React.Fragment>
-                <p>doctor</p>
-                CLIENT {address}
-                <br />
-                DOCTOR {trueUser.address}
                 <MapCase doctorData={this.props.trueUser.address} clientAddress={address} />
-                <Button onClick={this.handleAccept}>Accept</Button><Button>Decline</Button>
+                <br></br>
+                <Button style={{ position: 'absolute', left: '40%'}} color='green' size='massive' onClick={this.handleAccept}>Принять</Button>
             </React.Fragment>
         }
         return (

@@ -11,7 +11,7 @@ const mapData = {
 
 export default class MapCase extends React.Component {
     yandexMaps = null;
-
+    removed = null;
     state = {
         doctorData: '',
         clientAddress: ''
@@ -26,7 +26,7 @@ export default class MapCase extends React.Component {
 
     addListener = id => {
         console.log(this.state.doctorData)
-        firebase.database().ref('cases').child(id).child('doctors').on('child_added', async(snap) => {
+        firebase.database().ref('cases').child(id).child('doctors').on('child_added', async (snap) => {
 
             await this.setState({
                 doctorData: snap.val()
@@ -40,12 +40,12 @@ export default class MapCase extends React.Component {
                         // чтобы маршрут был виден целиком.
                         boundsAutoApply: true
                     });
+                this.map.geoObjects.remove(this.removed);
                 this.map.geoObjects.add(multiRoute);
-            }           
- 
+            }
         })
     }
-    
+
     handleApiAvaliable = ymaps => {
         this.yandexMaps = ymaps;
         this.setState({
@@ -60,6 +60,7 @@ export default class MapCase extends React.Component {
                 // чтобы маршрут был виден целиком.
                 boundsAutoApply: true
             });
+        this.removed = multiRoute;
         this.map.geoObjects.add(multiRoute);
     };
 
@@ -68,7 +69,7 @@ export default class MapCase extends React.Component {
 
         return (
             this.props.doctorData && <YMaps>
-                <div style={{ position: 'absolute', left: '25%', right: '25%' }}>
+                <div style={{ position: 'absolute', left: '0%', right: '25%', top: '20%' }}>
                     <Map
                         defaultState={mapData}
                         modules={['multiRouter.MultiRoute']}

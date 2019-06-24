@@ -28,9 +28,10 @@ class Login extends React.Component {
     render(){
         return(
             <Form onSubmit = {this.handleSubmit} >
-                <Form.Input name='email' icon ='mail' placeholder = 'e-mail' onChange={this.handleChange}/>
-                <Form.Input name='password' type='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
-                <Button> Login </Button>
+                <br/>
+                <Form.Input style={{width:'500px'}} name='email' icon ='mail' placeholder = 'e-mail' onChange={this.handleChange}/>
+                <Form.Input style={{width:'500px'}} name='password' type='password' icon ='lock' placeholder = 'Пароль' onChange={this.handleChange}/>
+                <Button color='green' style={{width:'500px'}}> Войти </Button>
             </Form>
         )
     }

@@ -25,13 +25,12 @@ app.post('/send-sms', function (req, res) {
     res.header('Content-Type', 'application/json');
 
     client.messages.create({
-        to: TO_NUMBER,
+        to: '+79167194665',
         from: FROM_NUMBER,
         body: `
-        Описание: ${req.body.text.desc}
         Адрес: ${req.body.text.address}
         Телефон: ${req.body.text.tel}
-        Как попасть в квартиру: ${req.body.text.howto}
+        Перейдите по ссылке, чтобы подтвердить вызов: link/#/${req.body.text.id}
         `
     })
         .then(() => {
